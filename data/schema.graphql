@@ -1,0 +1,416 @@
+"""Department Model"""
+type Department {
+    id: ID,
+    departmentName: String,
+}
+
+"""New Department Fields"""
+input DepartmentInput {
+    id: ID,
+    departmentName: String
+}
+
+"""Position Model"""
+type Position {
+    id: ID,
+    positionName: String,
+    typeWorker: TypeWorker,
+    costCenter: CostCenter
+}
+
+"""New Position Fields"""
+input PositionInput {
+    id: ID,
+    positionName: String
+    typeWorker: TypeWorker
+    costCenter: CostCenter
+}
+
+"""Employee Model"""
+type Employee {
+    id: ID,
+    payroll: Int,
+    name: String,
+    surnameP: String,
+    surnameM: String,
+    department: ID,
+    position: ID,
+    email: String,
+    password: String,
+    machine: ID
+    birthday: String,
+    register: String
+}
+
+"""New Employee Fields"""
+input EmployeeInput {
+    id: ID,
+    payroll: Int
+    name: String
+    surnameP: String
+    surnameM: String,
+    department: ID
+    position: ID
+    email: String,
+    password: String,
+    machine: ID
+    birthday: String
+    register: String
+}
+
+"""Square Model"""
+type Square {
+    id: ID,
+    squareNumber: Int,
+    department: ID,
+    register: String,
+    updated: String
+}
+
+"""New Square Fileds"""
+input SquareInput {
+    id: ID,
+    squareNumber: Int,
+    department: ID
+    register: String
+    updated: String
+}
+
+"""Machine Model"""
+type Machine {
+    id: ID,
+    machineNumber: String,
+    square: ID,
+    register: String
+    updated: String
+}
+
+"""New Machine Fields"""
+input MachineInput {
+    id: ID,
+    machineNumber: String,
+    square: ID,
+    register: String,
+    updated: String
+}
+
+"""Product Model"""
+type Product {
+    id: ID,
+    productName: String,
+    partNumber: String
+    machine: ID,
+    register: String,
+    updated: String
+}
+
+"""New Product Fields"""
+input ProductInput {
+    id: ID,
+    productName: String,
+    partNumber: String,
+    machine: ID,
+    register: String,
+    updated: String
+}
+
+"""Year Model"""
+type Year {
+    id: ID,
+    year: Int 
+}
+
+"""New Year Fields"""
+input YearInput {
+    id: ID,
+    year: Int
+}
+
+"""Month Model"""
+type Month {
+    id: ID,
+    month: String,
+    year: ID
+}
+
+"""New Month Fields"""
+input MonthInput {
+    id: ID,
+    month: String,
+    year: ID
+}
+
+"""Week Model"""
+type Week {
+    id: ID,
+    week: Int,
+    month: ID
+}
+
+"""New Week Fields"""
+input WeekInput {
+    id: ID,
+    week: Int,
+    month: ID
+}
+
+"""Day Model"""
+type Day {
+    id: ID,
+    dayNumber: Int,
+    dayName: String,
+    week: ID
+}
+
+"""New Day Fields"""
+input DayInput {
+    id: ID,
+    dayNumber: Int,
+    dayName: String,
+    week: ID
+}
+
+"""Indicator Model"""
+type Indicator {
+    indicator: IndicatorOption
+}
+
+"""New Indicator Fields"""
+input IndicatorInput {
+    indicator: IndicatorOption
+}
+
+"""Observation Model"""
+type Observation {
+    observation: String
+}
+
+"""New Observation Fields"""
+input ObservationInput {
+    observation: String
+}
+
+"""Mobility Model"""
+type Mobility {
+    department: ID,
+    id: ID,
+    day: ID,
+    squares: [Square],
+    machines: [Machine],
+    operators: [Employee],
+    products: [Product],
+    indicators: [Indicator],
+    observations: [Observation],
+    register: String
+}
+
+"""New Mobility Fields"""
+input MobilityInput {
+    department: ID
+    id: ID,
+    day: ID,
+    squares: [SquareInput],
+    machines: [MachineInput],
+    operators: [EmployeeInput],
+    products: [ProductInput],
+    indicators: [IndicatorInput],
+    observations: [ObservationInput],
+    register: String
+}
+
+"""Enum TypeWorker"""
+enum TypeWorker {
+    NS
+    S    
+}
+
+"""Enum CostCenter"""
+enum CostCenter {
+    SUELDOS
+    MOI
+    MOD
+}
+
+"""Enum Indicator"""
+enum IndicatorOption {
+    GRIS
+    AMARILLO
+    ROJO
+    VERDE
+}
+
+"""Queries Department"""
+type Query {
+    """Get All Departments"""
+    getDepartments(limit: Int, offset: Int): [Department]
+    
+    """Get Department ID"""
+    getDepartment(id: ID): Department
+
+    """Count Departments"""
+    totalDepartments: String
+
+    """Get All Positions"""
+    getPositions(limit: Int, offset: Int): [Position]
+
+    """Get Position ID"""
+    getPosition(id: ID): Position
+
+    """Count Positions"""
+    totalPositions: String
+
+    """Get All Employees"""
+    getEmployees(limit: Int, offset: Int): [Employee]
+
+    """Get Employee ID"""
+    getEmployee(id: ID): Employee
+
+    """Count Employees"""
+    totalEmployees: String
+
+    """Get Department For Employee"""
+    getDepartmentEmployee(id: ID): Department
+
+    """Get Departments For Mobility"""
+    getDepartmentsSquare: [Department]
+
+    """Get All Squares From Department"""
+    getSquares(department: String): [Square]
+
+    """Get All Squares"""
+    getAllSquares: [Square]
+
+    """Get Square ID"""
+    getSquare(id: ID): Square
+
+    """Get All Machines From Square"""
+    getMachines(square: String): [Machine]
+
+    """Get Machine ID"""
+    getMachine(id: ID): Machine
+
+    """Get All Machines"""
+    getAllMachines: [Machine]
+
+    """Get All Products From Machine"""
+    getProducts(machine: String): [Product]
+
+    """Get Product ID"""
+    getProduct(id: ID): Product
+
+    """Get All Products"""
+    getAllProducts: [Product]
+
+    """Get All Operators"""
+    getAllOperators: [Employee]
+
+    """Get All Years"""
+    getAllYears: [Year]
+
+    """Get Year ID"""
+    getYear(id: ID): Year
+
+    """Get All Months From Year"""
+    getMonths(year: String): [Month]
+
+    """Get Month ID"""
+    getMonth(id: ID): Month
+
+    """Get All Weeks From Month"""
+    getWeeks(month: String): [Week]
+
+    """Get Week ID"""
+    getWeek(id: ID): Week
+
+    """Get All Days From Week"""
+    getDays(week: String): [Day]
+
+    """Get Day ID"""
+    getDay(id: ID): Day
+
+    """Get Operators from Department"""
+    getOperators(department: String): [Employee]
+
+    """Get Mobility From Day"""
+    getMobilities(day: String): [Mobility]
+
+    """Get Mobility ID"""
+    getMobility(id: ID): Mobility
+
+}
+
+"""Mutations Department"""
+type Mutation {
+    """Create New Department"""
+    createDepartment(input: DepartmentInput): Department
+
+    """Update Department"""
+    updateDepartment(input: DepartmentInput): Department
+
+    """Delete Department"""
+    deleteDepartment(id: ID!): String
+
+    """Create New Position"""
+    createPosition(input: PositionInput): Position
+
+    """Update Position"""
+    updatePosition(input: PositionInput): Position
+
+    """Delete Position"""
+    deletePosition(id: ID!): String
+
+    """Create New Employee"""
+    createEmployee(input: EmployeeInput): Employee
+
+    """Update Employee"""
+    updateEmployee(input: EmployeeInput): Employee
+
+    """Delete Employee"""
+    deleteEmployee(id: ID!): String
+
+    """Create New Square"""
+    createSquare(input: SquareInput): Square
+
+    """Update Square"""
+    updateSquare(input: SquareInput): Square
+
+    """Delete Square"""
+    deleteSquare(id: ID!): String
+
+    """Create New Machine"""
+    createMachine(input: MachineInput): Machine
+
+    """Update Machine"""
+    updateMachine(input: MachineInput): Machine
+
+    """Delete Machine"""
+    deleteMachine(id: ID!): String
+
+    """Create New Product"""
+    createProduct(input: ProductInput): Product
+
+    """Update Product"""
+    updateProduct(input: ProductInput): Product
+
+    """Delete Product"""
+    deleteProduct(id: ID!): String
+
+    """Create New Year"""
+    createYear(input: YearInput): Year
+
+    """Create New Month"""
+    createMonth(input: MonthInput): Month
+
+    """Create New Week"""
+    createWeek(input: WeekInput): Week
+
+    """Create New Day"""
+    createDay(input: DayInput): Day
+
+    """Create New Mobility"""
+    createMobility(input: MobilityInput): Mobility
+
+    """Update Mobility"""
+    updateMobility(input: MobilityInput): Mobility
+
+}
