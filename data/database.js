@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcryptjs from 'bcryptjs';
 
 mongoose.Promise = global.Promise;
 
@@ -43,6 +44,13 @@ const employeeSchema = new mongoose.Schema({
     birthday: Date,
     register: Date
 });
+
+//Hash the passwords
+employeeSchema.pre('save', function(next) {
+    if(!this.isModified('password')){
+        return next();
+    }
+})
 
 const Employee = mongoose.model('employees', employeeSchema);
 
@@ -111,7 +119,8 @@ const Day = mongoose.model('days', daySchema);
 
 //Mobility Database
 const mobilitySchema = new mongoose.Schema({
-    department: String,
+    department: mongoose.Types.ObjectId,
+    week: String,
     day: String,
     squares: Array,
     machines: Array,

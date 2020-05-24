@@ -9,13 +9,14 @@
   "author": "Alejandro Hernández Zepeda",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.12.0",
+    "apollo-server-express": "^2.13.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.6.0",
     "graphql-import": "^1.0.2",
     "graphql-tools": "^4.0.8",
-    "mongoose": "^5.9.11",
+    "mongoose": "^5.9.12",
     "nodemon": "^2.0.3"
   },
   "devDependencies": {

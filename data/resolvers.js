@@ -319,11 +319,51 @@ export const resolvers = {
             });
         },
 
+        //Get Mobility From ID
         getMobility: (root, {id}) => {
             return new Promise((resolve, object) => {
                 Mobility.findById(id, (error, mobility) => {
                     if(error) rejects(error);
                     else resolve(mobility);
+                });
+            });
+        },
+
+        //Get Mobility From Department & Day
+        getMobilitiesDD: (root, {day, department}) => {
+            return new Promise((resolve, object) => {
+                Mobility.find({$and :[
+                    {day: day},
+                    {department: department}
+                ]}).exec((error, mobility) => {
+                    if(error) rejects(error);
+                    else resolve(mobility);
+                });
+            });
+        },
+
+        //Get Mobility From Week
+        getMobilitiesWeek: (root, {day, department}) => {
+            return new Promise((resolve, object) => {
+                Mobility.find({$and : [
+                    {day: day},
+                    {department: department}
+                ]}).exec((error, mobilities) => {
+                    if(error) rejects(error);
+                    else resolve(mobilities);
+                });
+            });
+        },
+
+        //Get Mobility From Month
+        getMobilitiesMonth: (root, {week, department}) => {
+            return new Promise((resolve, object) => {
+                Mobility.find({$and : [
+                    {week: week},
+                    {department: department}
+                ]}).exec((error, mobilities) => {
+                    if(error) rejects(error);
+                    else resolve(mobilities);
                 });
             });
         }
@@ -412,7 +452,16 @@ export const resolvers = {
         //** TO DO Employee Mutations */
 
         //Create Employee
-        createEmployee: (root, {input}) => {
+        createEmployee: async (root, {input}) => {
+
+            //Duplicate Payroll
+            const payrollDuplicate = await Employee.findOne({payroll: input.payroll});
+
+            if(payrollDuplicate)
+            {
+                throw new Error('Este número de nómina ya esta en uso.');
+            }
+
             const newEmployee = new Employee({
                 payroll: input.payroll,
                 name: input.name,
@@ -648,6 +697,7 @@ export const resolvers = {
         createMobility: (root, {input}) => {
             const newMobility = new Mobility({
                 department: input.department,
+                week: input.week,
                 day: input.day,
                 squares: input.squares,
                 machines: input.machines,

@@ -194,6 +194,7 @@ input ObservationInput {
 type Mobility {
     department: ID,
     id: ID,
+    week: ID,
     day: ID,
     squares: [Square],
     machines: [Machine],
@@ -208,6 +209,7 @@ type Mobility {
 input MobilityInput {
     department: ID
     id: ID,
+    week: ID,
     day: ID,
     squares: [SquareInput],
     machines: [MachineInput],
@@ -336,6 +338,15 @@ type Query {
 
     """Get Mobility ID"""
     getMobility(id: ID): Mobility
+
+    """Get Mobility From Department & Day"""
+    getMobilitiesDD(day: String, department: String): [Mobility]
+
+    """Get Mobility From Week"""
+    getMobilitiesWeek(day: [String], department: String): [Mobility]
+
+    """Get Mobility From Month"""
+    getMobilitiesMonth(week: [String], department: String): [Mobility]
 
 }
 
